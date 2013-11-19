@@ -79,21 +79,25 @@
 #pragma mark KeyBoard Actions handling
 #pragma mark-
 
+#define DEVICE_IS_PORTRAIT [[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortrait || [[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortraitUpsideDown
+
 -(void)keyboardWasShown:(NSNotification *)aNotification
 {
     NSDictionary* info = [aNotification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    float kbHeight = ([[UIDevice currentDevice] orientation] == UIDeviceOrientationPortrait || [[UIDevice currentDevice] orientation] == UIDeviceOrientationPortraitUpsideDown) ? kbSize.height : kbSize.width;
     
+    float kbHeight = DEVICE_IS_PORTRAIT ? kbSize.height : kbSize.width;
+    
+    NSLog(@"kbheight %f", kbHeight);
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbHeight, 0.0);
-
+    
     self.currentScrollView.contentInset = contentInsets;
     self.currentScrollView.scrollIndicatorInsets = contentInsets;
-
+    
     // If active text field is hidden by keyboard, scroll it so it's visible
     // Your app might not need or want this behavior.
     CGRect aRect = self.view.frame;
-    aRect.size.height -= kbSize.height;
+    aRect.size.height -= kbHeight;
     if (!CGRectContainsPoint(aRect, activeField.frame.origin) ) {
         [self.currentScrollView scrollRectToVisible:activeField.frame animated:YES];
     }
