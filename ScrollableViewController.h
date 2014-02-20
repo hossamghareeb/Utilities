@@ -16,9 +16,9 @@
 
 
 
-@property (nonatomic, assign) UIScrollView *currentScrollView;
+@property (nonatomic, weak) UIScrollView *currentScrollView;
 @property (nonatomic, weak) UITextField *activeField;
-
+@property (nonatomic, assign) float currentKBHeight;
 -(void)keyboardWasShown:(NSNotification *)notification;
 -(void)keyboardWillBeHidden:(NSNotification *)notification;
 

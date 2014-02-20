@@ -87,7 +87,7 @@
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
     float kbHeight = DEVICE_IS_PORTRAIT ? kbSize.height : kbSize.width;
-    
+    self.currentKBHeight = kbHeight;
     NSLog(@"kbheight %f", kbHeight);
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbHeight, 0.0);
     
